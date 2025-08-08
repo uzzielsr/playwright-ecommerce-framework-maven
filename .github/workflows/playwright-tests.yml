@@ -32,7 +32,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            libasound2t64 libffi8 libx264-164 \
+            libasound2t64 libffi8 libx264-dev \
             libnss3 libnspr4 libgbm1 libgtk-3-0 libxss1 libatk-bridge2.0-0 \
             libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 \
             libxshmfence1 fonts-liberation
