@@ -21,14 +21,14 @@ jobs:
           java-version: "17"
           cache: "maven"
 
+      - name: Install Playwright browsers
+        run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
+
       - name: Cache Playwright browsers
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright
-
-      - name: Install Playwright browsers
-        run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
 
       - name: Run UI tests (prod)
         run: mvn test -Dsurefire.printSummary=true -Denv=prod -Dtest=*UiTest
