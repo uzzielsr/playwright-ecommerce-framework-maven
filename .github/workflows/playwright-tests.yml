@@ -35,7 +35,12 @@ jobs:
             libasound2t64 libffi8 libx264-dev \
             libnss3 libnspr4 libgbm1 libgtk-3-0 libxss1 libatk-bridge2.0-0 \
             libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 \
-            libxshmfence1 fonts-liberation
+            libxshmfence1 fonts-liberation \
+            libwoff1 libvpx7 libevent-2.1-7 libopus0 \
+            gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
+            gstreamer1.0-libav gstreamer1.0-alsa gstreamer1.0-gl \
+            libharfbuzz-icu0 libsecret-1-0 libhyphen0 libmanette-0.2-0 \
+            flite1 flite-alsa flite1-modules flite1-voices
 
       # Cache Playwright browsers BEFORE installing
       - name: Cache Playwright browsers
