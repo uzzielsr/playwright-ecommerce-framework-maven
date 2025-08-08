@@ -52,7 +52,7 @@ jobs:
 
       # Install Playwright browsers
       - name: Install Playwright browsers
-        run: mvn -B -e exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install"
+        run: mvn -B -e exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install" 2>/dev/null
         timeout-minutes: 10
 
       - name: Run UI tests (prod)
