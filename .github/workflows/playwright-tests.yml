@@ -10,6 +10,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,35 +23,75 @@ jobs:
           java-version: "17"
           cache: "maven"
 
+      # Compile and download dependencies first
+      - name: Compile and download dependencies
+        run: mvn -B compile test-compile -DskipTests=true
+
+      # Install system dependencies for Playwright (Ubuntu 24.04)
+      - name: Install system dependencies for Playwright
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libasound2t64 libffi8 libx264-dev \
+            libnss3 libnspr4 libgbm1 libgtk-3-0 libxss1 libatk-bridge2.0-0 \
+            libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 \
+            libxshmfence1 fonts-liberation \
+            libwoff1 libevent-2.1-7 libopus0 \
+            gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
+            gstreamer1.0-libav gstreamer1.0-alsa gstreamer1.0-gl \
+            libharfbuzz-icu0 libsecret-1-0 libhyphen0 libmanette-0.2-0
+
+      # Cache Playwright browsers BEFORE installing
       - name: Cache Playwright browsers
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
 
+      # Install Playwright browsers
       - name: Install Playwright browsers
-        run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
+        run: mvn -B -e exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install"
+        timeout-minutes: 10
 
       - name: Run UI tests (prod)
         run: mvn test -Dsurefire.printSummary=true -Denv=prod -Dtest=*UiTest
         env:
           CI: true
         continue-on-error: true
+        timeout-minutes: 15
 
       - name: Run API tests (prod)
         run: mvn test -Dsurefire.printSummary=true -Denv=prod -Dtest=*ApiTest
         env:
           CI: true
         continue-on-error: true
+        timeout-minutes: 10
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-results
+          name: test-results-${{ github.run_id }}
           path: |
-            target/surefire-reports
-            playwright-report
-            traces
+            target/surefire-reports/**/*
+            target/site/serenity/**/*
+            playwright-report/**/*
+            test-output/**/*
+            traces/**/*
           retention-days: 7
           if-no-files-found: ignore
+
+      # Debug info on failure
+      - name: Debug info on failure
+        if: failure()
+        run: |
+          echo "Java version:"
+          java -version
+          echo "Maven version:"
+          mvn -version
+          echo "Playwright browsers:"
+          ls -la ~/.cache/ms-playwright/ || echo "No Playwright cache found"
+          echo "Maven dependencies:"
+          mvn dependency:tree || echo "Failed to show dependency tree"
