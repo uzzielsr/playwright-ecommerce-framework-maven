@@ -23,7 +23,6 @@ jobs:
           java-version: "17"
           cache: "maven"
 
-
       # Compile and download dependencies first
       - name: Compile and download dependencies
         run: mvn compile test-compile -DskipTests=true
