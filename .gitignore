@@ -10,10 +10,10 @@
 classpath.txt
 
 # Playwright Java
+# Playwright Java
 playwright-report/
 traces/
 screenshots/
-.env*
 
 # OS
 Thumbs.db
