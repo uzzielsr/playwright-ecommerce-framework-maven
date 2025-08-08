@@ -1,0 +1,22 @@
+# Maven/Java
+/target/
+*.log
+*.class
+*.iml
+.idea/
+.DS_Store
+
+# Archivos generados
+classpath.txt
+
+# Playwright Java
+playwright-report/
+traces/
+screenshots/
+.env*
+
+# OS
+Thumbs.db
+
+# VSCode
+.vscode/
