@@ -22,7 +22,7 @@ jobs:
           cache: "maven"
 
       - name: Install Playwright browsers
-        run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps"
+        run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install --with-deps --force"
 
       - name: Cache Playwright browsers
         uses: actions/cache@v4
