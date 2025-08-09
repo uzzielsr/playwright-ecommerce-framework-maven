@@ -56,14 +56,14 @@ jobs:
         timeout-minutes: 10
 
       - name: Run UI tests (prod)
-        run: mvn test -Dsurefire.printSummary=true -Denv=prod -Dtest=*UiTest
+        run: mvn test -Dsurefire.printSummary=true -Denv=prod -Dtest=*UiTest 2>&1 | grep -v -E "libvpx7|Host system is missing dependencies|Playwright Host validation warning"
         env:
           CI: true
         continue-on-error: true
         timeout-minutes: 15
 
       - name: Run API tests (prod)
-        run: mvn test -Dsurefire.printSummary=true -Denv=prod -Dtest=*ApiTest
+        run: mvn test -Dsurefire.printSummary=true -Denv=prod -Dtest=*ApiTest 2>&1 | grep -v -E "libvpx7|Host system is missing dependencies|Playwright Host validation warning"
         env:
           CI: true
         continue-on-error: true
