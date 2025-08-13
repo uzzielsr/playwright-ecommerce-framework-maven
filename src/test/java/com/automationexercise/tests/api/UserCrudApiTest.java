@@ -6,6 +6,7 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -16,6 +17,7 @@ import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.Playwright;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisplayName("User Account CRUD API")
 public class UserCrudApiTest {
 
     private Playwright playwright;
@@ -50,6 +52,7 @@ public class UserCrudApiTest {
     }
 
     @Test
+    @DisplayName("Performs full CRUD flow for a user via API")
     void performsFullCrudFlowForUserViaApi() {
         userApi.createUser(user);
         userApi.readUser(user.email);
