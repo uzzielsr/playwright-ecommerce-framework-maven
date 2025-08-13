@@ -9,8 +9,8 @@ public class TestUserGenerator {
     private static Dotenv dotenvInstance;
 
     /**
-     * Valida que la URL base sea accesible antes de correr los tests. Lanza
-     * RuntimeException si no responde.
+     * Validates that the base URL is accessible before running the tests.
+     * Throws RuntimeException if it does not respond.
      */
     public static void validateBaseUrl(String baseUrl) {
         if (baseUrl == null || baseUrl.isBlank()) {
@@ -24,12 +24,12 @@ public class TestUserGenerator {
             connection.setReadTimeout(3000);
             int responseCode = connection.getResponseCode();
             if (responseCode >= 400) {
-                throw new RuntimeException("BASE_URL no responde correctamente (HTTP " + responseCode + "): " + baseUrl);
+                throw new RuntimeException("BASE_URL did not respond correctly (HTTP " + responseCode + "): " + baseUrl);
             }
         } catch (java.net.MalformedURLException e) {
-            throw new RuntimeException("URL mal formada para BASE_URL: " + baseUrl + "\n" + e.getMessage());
+            throw new RuntimeException("Malformed URL for BASE_URL: " + baseUrl + "\n" + e.getMessage());
         } catch (java.io.IOException e) {
-            throw new RuntimeException("No se pudo conectar a BASE_URL: " + baseUrl + "\n" + e.getMessage());
+            throw new RuntimeException("Could not connect to BASE_URL: " + baseUrl + "\n" + e.getMessage());
         }
     }
 

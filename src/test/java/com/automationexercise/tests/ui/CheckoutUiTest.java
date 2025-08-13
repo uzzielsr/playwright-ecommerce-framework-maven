@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -23,6 +24,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisplayName("Checkout UI")
 public class CheckoutUiTest {
 
     private Playwright playwright;
@@ -81,6 +83,7 @@ public class CheckoutUiTest {
     }
 
     @Test
+    @DisplayName("Successful Checkout Flow (UI end-to-end)")
     void successfulCheckoutFlowUiEndToEnd() {
         plpPage.navigate();
         plpPage.selectProduct();

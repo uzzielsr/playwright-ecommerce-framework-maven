@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -18,6 +19,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisplayName("Automate Login UI")
 public class LoginUiTest {
 
     private Playwright playwright;
@@ -67,12 +69,14 @@ public class LoginUiTest {
     }
 
     @Test
+    @DisplayName("Should log in successfully with valid credentials")
     void shouldLoginSuccessfullyWithValidCredentials() {
         loginPage.login(user.email, user.password);
         loginPage.verifyLoginSuccess(user.name);
     }
 
     @Test
+    @DisplayName("Should display error for invalid login credentials")
     void shouldDisplayErrorForInvalidLoginCredentials() {
         int random = (int) (Math.random() * 100000);
         loginPage.login(random + "@invalid.com", "WrongPassword");

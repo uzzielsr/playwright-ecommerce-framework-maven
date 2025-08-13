@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -18,6 +19,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisplayName("Account Creation UI")
 public class SignupUiTest {
 
     private Playwright playwright;
@@ -66,6 +68,7 @@ public class SignupUiTest {
     }
 
     @Test
+    @DisplayName("Successful Account Creation with Valid Data")
     void successfulAccountCreationWithValidData() {
         signupPage.signUp(user);
         signupPage.verifyAccountCreated();

@@ -3,6 +3,7 @@ package com.automationexercise.tests.api;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -13,6 +14,7 @@ import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.Playwright;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisplayName("Automate Login API")
 public class LoginApiTest {
 
     private Playwright playwright;
@@ -46,11 +48,13 @@ public class LoginApiTest {
     }
 
     @Test
+    @DisplayName("Should log in successfully with valid credentials")
     void shouldLoginSuccessfullyWithValidCredentials() {
         userApi.verifyUserExists(user.email, user.password);
     }
 
     @Test
+    @DisplayName("Should display error for invalid login credential")
     void shouldDisplayErrorForInvalidLoginCredentials() {
         int random = (int) (Math.random() * 100000);
         userApi.verifyUserDoesNotExist(random + "@invalid.com", "WrongPassword");

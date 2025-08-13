@@ -118,18 +118,34 @@ mvn test -Dheadless=false -Dtest=LoginUiTest#loginWithValidCredentials
 
 ```
 playwright-ecommerce-framework-maven/
-├── api/                        # API utilities
-├── locators/                   # Environment selectors
-├── pages/                      # Page Objects
-├── tests/                      # Test files (UI and API)
-├── utils/                      # Utilities and helpers
-├── .env.prod                   # Production environment variables
-├── .env.qa                     # QA environment variables
-├── .env.uat                    # UAT environment variables
-├── pom.xml                     # Maven dependencies and configuration
-├── playwright.config.ts        # (if applicable)
-├── README.md                   # This file
+├── src/
+│   ├── main/
+│   │   └── java/
+│   │       └── com/automationexercise/
+│   │           ├── api/           # API utilities
+│   │           ├── locators/      # Environment selectors (by env)
+│   │           ├── pages/         # Page Objects (UI flows)
+│   │           ├── utils/         # Utilities and helpers
+│   │           └── listeners/     # Custom JUnit listeners
+│   └── test/
+│       └── java/
+│           └── com/automationexercise/
+│               └── tests/
+│                   ├── api/       # API test classes
+│                   └── ui/        # UI test classes
+├── test.sh                        # Script to run tests with pretty output
+├── pom.xml                        # Maven dependencies and configuration
+├── .env.prod                      # Production environment variables
+├── .env.qa                        # QA environment variables
+├── .env.uat                       # UAT environment variables
+├── README.md                      # This file
 ```
+
+Key files:
+
+- `RunWithDisplayNameListener.java`: Custom JUnit Platform launcher for pretty output
+- `MinimalConsoleListener.java`: Listener for Playwright-style output
+- `test.sh`: Main script to run tests with minimal, colored output
 
 ## Features
 
@@ -142,6 +158,18 @@ playwright-ecommerce-framework-maven/
 - **Advanced reports** (Surefire, HTML, screenshots)
 - **API integration to support UI tests**
 - **100% Java and Maven**
+
+## Pretty Output & Custom Test Runner
+
+- All test output is minimal and Playwright-style: colored ✔/✘, test group and test names, and only the main error message.
+- Uses a custom JUnit Platform launcher (`RunWithDisplayNameListener`) and listener (`MinimalConsoleListener`) for pretty output.
+- Run tests with the included `test.sh` script for the best experience:
+  ```sh
+  ./test.sh                # Runs all tests with pretty output
+  ./test.sh --select-class com.automationexercise.tests.ui.LoginUiTest
+  ./test.sh --select-method com.automationexercise.tests.ui.LoginUiTest#shouldLoginSuccessfullyWithValidCredentials
+  ```
+- All code, comments, and error messages are in English for full consistency.
 
 ## Test Coverage
 
