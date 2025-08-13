@@ -38,8 +38,6 @@ public class UserApi {
     }
 
     public void createUser(User user) {
-        Map<String, Object> body = null;
-        String actual = null;
         try {
             FormData form = FormData.create()
                     .set("name", user.name)
@@ -63,11 +61,11 @@ public class UserApi {
             if (response.status() != 200) {
                 throw new AssertionError("Expected status 200, got " + response.status());
             }
-            body = parseJson(response);
+            Map<String, Object> body = parseJson(response);
             if (!"201".equals(body.get("responseCode"))) {
                 throw new AssertionError("Expected responseCode 201, got " + body.get("responseCode"));
             }
-            actual = body.getOrDefault("message", "").toString();
+            String actual = body.getOrDefault("message", "").toString();
             if (!actual.contains("User created!")) {
                 throw new AssertionError("User creation message not found.");
             }
@@ -77,8 +75,6 @@ public class UserApi {
     }
 
     public void verifyUserExists(String email, String password) {
-        Map<String, Object> body = null;
-        String actual = null;
         try {
             FormData form = FormData.create()
                     .set("email", email)
@@ -87,8 +83,8 @@ public class UserApi {
             if (response.status() != 200) {
                 throw new AssertionError("Expected status 200, got " + response.status());
             }
-            body = parseJson(response);
-            actual = body.getOrDefault("message", "").toString();
+            Map<String, Object> body = parseJson(response);
+            String actual = body.getOrDefault("message", "").toString();
             if (!"200".equals(body.get("responseCode"))) {
                 throw new AssertionError("Expected responseCode 200, got " + body.get("responseCode"));
             }
@@ -101,8 +97,6 @@ public class UserApi {
     }
 
     public void verifyUserDoesNotExist(String email, String password) {
-        Map<String, Object> body = null;
-        String actual = null;
         try {
             FormData form = FormData.create()
                     .set("email", email)
@@ -111,11 +105,11 @@ public class UserApi {
             if (response.status() != 200) {
                 throw new AssertionError("Expected status 200, got " + response.status());
             }
-            body = parseJson(response);
+            Map<String, Object> body = parseJson(response);
             if (!"404".equals(body.get("responseCode"))) {
                 throw new AssertionError("Expected responseCode 404, got " + body.get("responseCode"));
             }
-            actual = body.getOrDefault("message", "").toString();
+            String actual = body.getOrDefault("message", "").toString();
             if (!actual.contains("User not found!")) {
                 throw new AssertionError("User not found message not found.");
             }
@@ -136,8 +130,6 @@ public class UserApi {
     }
 
     public void updateUser(String email, String password, Map<String, String> userUpdates) {
-        Map<String, Object> body = null;
-        String actual = null;
         try {
             FormData form = FormData.create();
             for (Map.Entry<String, String> entry : userUpdates.entrySet()) {
@@ -149,11 +141,11 @@ public class UserApi {
             if (response.status() != 200) {
                 throw new AssertionError("Expected status 200, got " + response.status());
             }
-            body = parseJson(response);
+            Map<String, Object> body = parseJson(response);
             if (!"200".equals(body.get("responseCode"))) {
                 throw new AssertionError("Expected responseCode 200, got " + body.get("responseCode"));
             }
-            actual = body.getOrDefault("message", "").toString();
+            String actual = body.getOrDefault("message", "").toString();
             if (!actual.contains("User updated!")) {
                 throw new AssertionError("User updated message not found.");
             }
@@ -163,8 +155,6 @@ public class UserApi {
     }
 
     public void deleteUser(String email, String password) {
-        Map<String, Object> body = null;
-        String actual = null;
         try {
             FormData form = FormData.create()
                     .set("email", email)
@@ -173,11 +163,11 @@ public class UserApi {
             if (response.status() != 200) {
                 throw new AssertionError("Expected status 200, got " + response.status());
             }
-            body = parseJson(response);
+            Map<String, Object> body = parseJson(response);
             if (!"200".equals(body.get("responseCode"))) {
                 throw new AssertionError("Expected responseCode 200, got " + body.get("responseCode"));
             }
-            actual = body.getOrDefault("message", "").toString();
+            String actual = body.getOrDefault("message", "").toString();
             if (!actual.contains("Account deleted!")) {
                 throw new AssertionError("Account deleted message not found.");
             }

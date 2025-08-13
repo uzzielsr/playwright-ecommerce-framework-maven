@@ -58,9 +58,9 @@ jobs:
       - name: Run UI tests (prod, pretty output)
         run: |
           chmod +x ./test.sh
-          ./test.sh --select-class com.automationexercise.tests.ui.LoginUiTest
-          ./test.sh --select-class com.automationexercise.tests.ui.SignupUiTest
-          ./test.sh --select-class com.automationexercise.tests.ui.CheckoutUiTest
+          ./test.sh --select-class com.automationexercise.tests.ui.LoginUiTest    | grep -v "Playwright Host validation warning"
+          ./test.sh --select-class com.automationexercise.tests.ui.SignupUiTest   | grep -v "Playwright Host validation warning"
+          ./test.sh --select-class com.automationexercise.tests.ui.CheckoutUiTest | grep -v "Playwright Host validation warning"
         env:
           CI: true
         continue-on-error: true
@@ -68,9 +68,9 @@ jobs:
 
       - name: Run API tests (prod, pretty output)
         run: |
-          chmod +x ./test.sh a
-          ./test.sh --select-class com.automationexercise.tests.api.LoginApiTest
-          ./test.sh --select-class com.automationexercise.tests.api.UserCrudApiTest
+          chmod +x ./test.sh
+          ./test.sh --select-class com.automationexercise.tests.api.LoginApiTest    | grep -v "Playwright Host validation warning"
+          ./test.sh --select-class com.automationexercise.tests.api.UserCrudApiTest | grep -v "Playwright Host validation warning"
         env:
           CI: true
         continue-on-error: true
